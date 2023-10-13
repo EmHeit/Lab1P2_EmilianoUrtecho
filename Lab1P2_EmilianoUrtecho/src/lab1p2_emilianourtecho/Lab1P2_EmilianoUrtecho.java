@@ -34,6 +34,7 @@ public class Lab1P2_EmilianoUrtecho {
                 case 1:// Ordenamiento de fechas
                     
                     CantidadFechas();
+                    OrdenarFechas();
                     
                     break;
                 case 2:// Registro Electronico
@@ -58,10 +59,14 @@ public class Lab1P2_EmilianoUrtecho {
     }
     
     public static void CantidadFechas (){
+
+        DateFormat df2 = new SimpleDateFormat("dd/MM/yyyy");
         
         int cantFechas;
         System.out.print("Ingrese la cantidad de fechas que desea: ");
         cantFechas = escan.nextInt();
+        
+        fechas.clear();
         
         for (int i = 0; i < cantFechas; i++) {
             int year = 1990 + randoms.nextInt(23);
@@ -73,22 +78,59 @@ public class Lab1P2_EmilianoUrtecho {
             
             fechas.add(fecha);
         }
-        
+        System.out.println("ArrayList Original: ");
         for (int i = 0; i < fechas.size(); i++) {
             Date Fecha = fechas.get(i);
             
-            DateFormat df2 = new SimpleDateFormat("dd/MM/yyyy");
             
-            if (i == fechas.size()) {
-                System.out.print(" }");                
-            }else if(i == 0){
+
                 System.out.print("{ ");
-            }else {
-                System.out.print(", ");
-            }
+
+ 
+            
             System.out.print(df2.format(Fecha));
+ 
+                System.out.print(" }");                
+             
         }
         
+        String fechasString = "";
+        for (int i = 0; i < fechas.size(); i++) {
+            Date Fecha = fechas.get(i); 
+            
+            fechasString += df2.format(Fecha)+ "/";
+            
+        }
+        
+        
+        
+    }
+    
+    public static void OrdenarFechas(){
+
+        DateFormat df2 = new SimpleDateFormat("dd/MM/yyyy");
+
+        int n = fechas.size();
+        boolean cambio;
+        
+        do {
+            cambio = false;
+            for (int i = 1; i < n; i++) {
+                if (fechas.get(i-1).compareTo(fechas.get(i)) > 0) {
+                    Date temporal = fechas.get(i -1);
+                    fechas.set(i-1, fechas.get(i-1));
+                    fechas.set(i, temporal);
+                    cambio = true;
+                }
+            }
+            n--;
+        } while (cambio);
+        System.out.println("");
+        System.out.println("Ordenado: ");
+        for (int i = 0; i < fechas.size(); i++) {
+            Date fecha = fechas.get(i);
+            System.out.println(df2.format(fecha));
+        }
     }
     
 }
