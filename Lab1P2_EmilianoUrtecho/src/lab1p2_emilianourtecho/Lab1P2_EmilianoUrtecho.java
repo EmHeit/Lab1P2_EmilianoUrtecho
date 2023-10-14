@@ -17,6 +17,13 @@ public class Lab1P2_EmilianoUrtecho {
     static Random randoms = new Random();
     static Calendar ca = Calendar.getInstance();
     static DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    static ArrayList <String> gmailCorreo = new ArrayList();
+    static ArrayList <String> outlookCorreo = new ArrayList();
+    static ArrayList <String> yahooCorreo = new ArrayList();
+    static ArrayList <String> icloudCorreo = new ArrayList();
+    static ArrayList <String> protonMailCorreo = new ArrayList();
+    static ArrayList <String> fastMailCorreo = new ArrayList();
+    static ArrayList <String> contrasena = new ArrayList();
     
     public static void main(String[] args) {
         byte eleccion;
@@ -38,6 +45,8 @@ public class Lab1P2_EmilianoUrtecho {
                     
                     break;
                 case 2:// Registro Electronico
+                    
+                    RegistroCorreo();
                     
                     break;
                 case 3:// SALIR
@@ -102,9 +111,8 @@ public class Lab1P2_EmilianoUrtecho {
                 Date fecha2 = fechas.get(j + 1);
                 
                 if (fecha1.getTime() > fecha2.getTime()) {
-                    Date intercambio = fechas.get(j);
                     fechas.set(j, fecha2);
-                    fechas.set(j+1, intercambio);
+                    fechas.set(j+1, fecha1);
                     cambio = true;
                 }
                 
@@ -127,5 +135,69 @@ public class Lab1P2_EmilianoUrtecho {
         }
         System.out.println("");
         System.out.println("");
+    }//No pude solucionar bien este codigo pero creo que mas o menos esta bien :,)
+    
+    public static void RegistroCorreo(){
+        byte opcion2;
+        System.out.println("    ~MENU Registro~");
+        System.out.println("1. Registrar Usuario");
+        System.out.println("2. Listar por Dominio");
+        System.out.println("3. SALIR");
+        System.out.print("Ingrese una opcion: ");
+        opcion2 = escan.nextByte();
+        do {
+            switch(opcion2){
+                case 1:// Registrar Usuario
+                    
+                    registarUsuario();
+                    
+                    break;
+                case 2://Listar por dominio
+                    
+                    listarPorDominio();
+                    
+                    break;
+                case 3://SALIR
+                    System.out.println("Si quiere salir, presione la tecla 3");
+                    break;
+                default://No se
+                    System.out.println("Porfavor presiona una de las teclas disponibles.");
+                    break;
+            }
+            System.out.println("    ~MENU Registro~");
+            System.out.println("1. Registrar Usuario");
+            System.out.println("2. Listar por Dominio");
+            System.out.println("3. SALIR");
+            System.out.print("Ingrese una opcion: ");
+            opcion2 = escan.nextByte();                        
+        
+        } while (opcion2 != 3);
+    }
+    
+    public static void registarUsuario(){
+        System.out.println("Ingrese su correo electronico: ");
+        String correo = escan.nextLine();
+        System.out.println("Ingrese su contrasena: ");
+        String contrasena = escan.nextLine();
+        
+        String dominio = obtenerDominio();
+        
+    }
+    public static void listarPorDominio(){
+        
+    }
+    public static boolean validarDominio(String dominio){
+        return dominio.equals("gmail") || dominio.equals("outlook") || dominio.equals("yahoo") || dominio.equals("icloud") || dominio.equals("protonmail") || dominio.equals("fastmail");
+    }
+    public static String obtenerDominio(String correo){
+        int arroba = correo.indexOf('@');
+        if (arroba != -1) {
+            char[] dominio = new char[correo.length() - arroba -1];
+            for (int i = 0; i < dominio.length; i++) {
+                dominio[i] = correo.charAt(i + arroba + 1);
+            }
+            return new String(dominio).toLowerCase();
+        }
+        return "";
     }
 }
