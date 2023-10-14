@@ -73,53 +73,59 @@ public class Lab1P2_EmilianoUrtecho {
             int month = randoms.nextInt(12);
             int day = randoms.nextInt(31);
             
-            ca.set(year, month-1, day-1);
+            ca.set(year, month-1, day);
             Date fecha = ca.getTime();
             
             fechas.add(fecha);
+            
         }
         System.out.println("ArrayList Original: ");
         for (int i = 0; i < fechas.size(); i++) {
             Date Fecha = fechas.get(i);
-            
-            
-
-                System.out.print("{");
-
- 
-            
+                    
+            System.out.print("[");            
             System.out.print(df2.format(Fecha));
- 
-                System.out.print("}");                
-             
+            System.out.print("]");                
+
         }
         
-        String fechasString = "";
-        for (int i = 0; i < fechas.size(); i++) {
-            Date Fecha = fechas.get(i); 
-            
-            fechasString += df2.format(Fecha)+ "/";
-            
-        }
-        
-        StringTokenizer st = new StringTokenizer(fechasString, "/");
-        ArrayList<String> fechasToken = new ArrayList();
-        int numTokens = st.countTokens();
-        
-        for (int i = 0; i < numTokens; i++) {
-            fechasToken.add(st.nextToken());
-        }
-        
-        Collections.sort(fechasToken);
         System.out.println("");
-        for (int i = 1; i < cantFechas; i++) {
+        
+        
+        for (int i = 0; i < cantFechas; i++) {
+            System.out.println("");
+            System.out.println("Iteracion "+ (i + 1)+ ": ");            
+            boolean cambio = false;
             
-            System.out.println("Iteracion "+i);
-            int numFechas = fechasToken.size();
-            for (int j = 0; j < numFechas; j++) {
-                System.out.print(fechasToken.get(i)+"/");
+            for (int j = i; j < cantFechas - i - 1; j++) {
+                Date fecha1 = fechas.get(j);
+                Date fecha2 = fechas.get(j + 1);
+                
+                if (fecha1.getTime() > fecha2.getTime()) {
+                    Date intercambio = fechas.get(j);
+                    fechas.set(j, fecha2);
+                    fechas.set(j+1, intercambio);
+                    cambio = true;
+                }
+                
+                for (int k = 0; k < fechas.size(); k++) {
+                    Date fecha = fechas.get(k);
+                    System.out.print("["+df2.format(fecha)+ "] ");
+                }
+                System.out.println("");
+            }
+            if (!cambio) {
+                break; //Si no hubieron intercambios entonces la lista ya estuvo ordenada
             }
         }
         
+        System.out.println("");
+        System.out.println("ArrayList Ordenado: ");
+        for (int i = 0; i < fechas.size(); i++) {
+            Date fechaOrd = fechas.get(i);
+            System.out.print("[" + df2.format(fechaOrd)+"] ");
+        }
+        System.out.println("");
+        System.out.println("");
     }
 }
